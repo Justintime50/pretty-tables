@@ -1,0 +1,16 @@
+language: python
+
+python:
+    - '3.6'
+    - '3.7'
+    - '3.8'
+
+install: pip install -e ."[dev]"
+
+script: 
+    - flake8 pretty_tables/*.py
+    - flake8 test/*.py
+    - pytest --cov=pretty_tables --cov-branch
+
+after_success:
+    - coveralls

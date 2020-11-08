@@ -1,0 +1,6 @@
+.DS_Store
+venv
+htmlcov
+__pycache__
+*.egg-info
+.coverage
