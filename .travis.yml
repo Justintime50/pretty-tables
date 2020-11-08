@@ -7,10 +7,14 @@ python:
 
 install: pip install -e ."[dev]"
 
-script: 
+script:
     - flake8 pretty_tables/*.py
     - flake8 test/*.py
     - pytest --cov=pretty_tables --cov-branch
 
 after_success:
     - coveralls
+
+deploy:
+    password:
+        secure: uvXLf0jEN2/2sa98XYTuButu99/hKcO8Cb6z8uOjYtMTMGTOZ5L9UErgVgnEytcczI2jE7FFl89Yhj5cd8Et+KXET2oJxWSAqoIEtdvjuo5f/UPiEewMUmtVxvnhx+qpyulBO1q9wCuCaKfmxBgIc4o3v6GkMbIXBTKvtnbo8iy/00u5gILEqxvdTiRsdS70Bre7qvb5SBg9NAOqItnfokICYJk8isNKTe+VDCYTrtYdW1mz/5UGbQ3x++fTzYSD/K5i6odqAokg2mClAaDOD+0uuA3KUITvoTNUjtuHeMzqFQRAzDPwl2kmV6Li5nGnGT6bckkp9I4DpO8hUT4y7Hdi7TzOUI0wOPyIIrezsCsWjUlCYA5CTKx1qcAkla4+0nPQSQJmIwnHQfuKou9Fpi/aUmDwrtRgCirRkx33Qwt4k1uDDGg2JIoe0BFWUBTA9EN34o1VFQnDPA3PnKdfgs3oJCnv9SgN7jPyD4jyVx9Mo5w6+PFUSu5TPw++sjNQVDYT7LF3YSq2qjPSzsCG3Y4TohoA71sqeqXkR5q6mnGfsyVcarmod+ki+P4n5tNPxhG7uA9vwIMFM5ssGwpA+EOb6xa2TJ64FvsIWDfnkZb943gIeL6vF/Rd9dIjtPDuoxFe1cj8tKzVIbgNfB5uIy1A5m1n2I1b7xcVxRCHOVs=
