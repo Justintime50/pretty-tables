@@ -6,7 +6,7 @@ Create pretty tables from headers and rows, perfect for console output.
 
 [![Build Status](https://travis-ci.com/Justintime50/pretty-tables.svg?branch=main)](https://travis-ci.com/Justintime50/pretty-tables)
 [![Coverage Status](https://coveralls.io/repos/github/Justintime50/pretty-tables/badge.svg?branch=main)](https://coveralls.io/github/Justintime50/pretty-tables?branch=main)
-[![PyPi](https://img.shields.io/pypi/v/pretty-tables-stats)](https://pypi.org/project/pretty-tables-stats/)
+[![PyPi](https://img.shields.io/pypi/v/pretty-tables)](https://pypi.org/project/pretty-tables/)
 [![Licence](https://img.shields.io/github/license/justintime50/pretty-tables)](LICENSE)
 
 <img src="assets/showcase.png" alt="Showcase">
