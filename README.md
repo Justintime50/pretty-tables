@@ -15,7 +15,7 @@ Create pretty tables from headers and rows, perfect for console output.
 
 Pretty Tables will create uniformly dispersed columns based on the input given and can be scaled to your needs in length of the table or number of columns. The input is automatically validated and converted to strings before returning successfully. Here is a simple sample output:
 
-```bash
+```
 | ID | Name   | Occupation        | Employed |
 | 1  | Justin | Software Engineer | True     |
 | 2  | Misty  | Receptionist      | False    |
@@ -52,7 +52,11 @@ rows = [
     [3, 'John', None, False],
 ]
 
-table = PrettyTables.generate_table(headers=headers, rows=rows, empty_cell_placeholder='No data')
+table = PrettyTables.generate_table(
+    headers=headers, 
+    rows=rows, 
+    empty_cell_placeholder='No data'
+)
 print(table)
 ```
 
