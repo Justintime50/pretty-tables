@@ -18,7 +18,7 @@ class TableColors:
 class PrettyTables(object):
     """A class used to generate pretty tables for console output."""
 
-    @staticmethod
+    @classmethod
     def generate_table(headers, rows, empty_cell_placeholder=None, colors=None, truthy=None):
         """
         Generate pretty tables with headers and rows (arrays).
@@ -52,7 +52,7 @@ class PrettyTables(object):
                     data = empty_cell_placeholder
                 formatted_row.append(data)
             table.append(formatted_row)
-        formatted_table = PrettyTables._format_table(table, colors, truthy)
+        formatted_table = PrettyTables._format_table(table)
         return formatted_table
 
     @staticmethod
