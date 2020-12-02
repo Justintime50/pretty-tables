@@ -103,8 +103,8 @@ class PrettyTables(object):
                 raise ValueError(
                     'Colors are set but are not a proper array.'
                 )
-            if len(colors) != len(headers):
-                raise IndexError('The number of colors does not mach the number of columns')
+            elif len(colors) != len(headers):
+                raise IndexError('The number of colors does not mach the number of columns.')
         table_length = len(headers)
         for i, row in enumerate(rows):
             if not isinstance(row, list):
@@ -114,7 +114,7 @@ class PrettyTables(object):
             row_length = len(row)
             if row_length != table_length:
                 raise IndexError(
-                    f'Row {i + 1} has {row_length} columns which doesn\'t match the table columns of {table_length}.'
+                    f'Row {i + 1} has {row_length} column(s) which does not match the table columns of {table_length}.'
                 )
 
         return True
