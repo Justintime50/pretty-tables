@@ -58,7 +58,7 @@ jobs:
           pip install -e ."[dev]"
       - name: Run Tests
         run: |
-          pytest --cov=pretty_tables --cov-branch
+          pytest --cov=pretty_tables --cov-report=term-missing --cov-fail-under 100
 
 # I'm not sure what you would have to do here to do the deploy stuff. But i'm sure it
 # is all easily done in actions.
