@@ -1,4 +1,4 @@
-name: XmsCore-4.1
+name: PrettyTable
 
 on: [push, pull_request]
 
@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [linux-latest]
+        platform: [ubuntu-latest]
         python-version: [3.6, 3.7, 3.8]
 
     steps:
@@ -39,7 +39,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [linux-latest]
+        platform: [ubuntu-latest]
         python-version: [3.6, 3.7, 3.8]
 
     steps:
