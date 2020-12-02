@@ -3,60 +3,51 @@ import mock
 from pretty_tables import PrettyTables
 
 
-TABLE = None
-HEADERS = ['ID', 'Name', 'Occupation', 'Employed']
-ROWS = [
-    [1, 'Justin', 'Software Engineer', True],
-    [2, 'Misty', 'Receptionist', False],
-    [3, 'John', None, False],
-]
-
-
-def test_generate_table():
-    pretty_table = PrettyTables.generate_table(HEADERS, ROWS, 'No data')
+def test_generate_table(headers, rows):
+    pretty_table = PrettyTables.generate_table(headers, rows, 'No data')
     assert pretty_table == """| ID | Name   | Occupation        | Employed |
 | 1  | Justin | Software Engineer | True     |
 | 2  | Misty  | Receptionist      | False    |
 | 3  | John   | No data           | False    |"""
 
 
-def test_validate_table_input_no_headers():
-    HEADERS = None
+def test_validate_table_input_no_headers(rows):
+    headers = None
     with pytest.raises(ValueError) as error:
-        PrettyTables._validate_table_input(HEADERS, ROWS)
+        PrettyTables._validate_table_input(headers, rows)
 
 
-def test_validate_table_input_bad_headers():
-    HEADERS = '123'
+def test_validate_table_input_bad_headers(rows):
+    headers = '123'
     with pytest.raises(ValueError) as error:
-        PrettyTables._validate_table_input(HEADERS, ROWS)
+        PrettyTables._validate_table_input(headers, rows)
 
 
-def test_validate_table_input_no_rows():
-    ROWS = None
+def test_validate_table_input_no_rows(headers):
+    rows = None
     with pytest.raises(ValueError) as error:
-        PrettyTables._validate_table_input(HEADERS, ROWS)
+        PrettyTables._validate_table_input(headers, rows)
 
 
-def test_validate_table_input_bad_rows():
-    ROWS = '123'
+def test_validate_table_input_bad_rows(headers):
+    rows = '123'
     with pytest.raises(ValueError) as error:
-        PrettyTables._validate_table_input(HEADERS, ROWS)
+        PrettyTables._validate_table_input(headers, rows)
 
 
 def test_validate_table_input_bad_row_in_rows():
-    HEADERS = ['column1']
-    ROWS = [
+    headers = ['column1']
+    rows = [
         '123',
     ]
     with pytest.raises(IndexError) as error:
-        PrettyTables._validate_table_input(HEADERS, ROWS)
+        PrettyTables._validate_table_input(headers, rows)
 
 
 def test_validate_table_input_mismatching_column_length():
-    HEADERS = ['column1', 'column2']
-    ROWS = [
+    headers = ['column1', 'column2']
+    rows = [
         ['123']
     ]
     with pytest.raises(IndexError) as error:
-        PrettyTables._validate_table_input(HEADERS, ROWS)
+        PrettyTables._validate_table_input(headers, rows)
