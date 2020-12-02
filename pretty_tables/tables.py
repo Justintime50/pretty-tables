@@ -1,11 +1,25 @@
 """The tables module for the pretty_tables library."""
 
 
+class TableColors:
+    """A class to contain constants for colors for the table."""
+
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
+
 class PrettyTables(object):
     """A class used to generate pretty tables for console output."""
 
     @staticmethod
-    def generate_table(headers, rows, empty_cell_placeholder=None):
+    def generate_table(headers, rows, empty_cell_placeholder=None, colors=None):
         """
         Generate pretty tables with headers and rows (arrays).
 
@@ -19,6 +33,7 @@ class PrettyTables(object):
             headers (list): a list of headers for the table.
             rows (list[list]): A list of rows for the table.
             empty_cell_placeholder: The value to be placed in cells with no data.
+            colors (list): A list of TableColors for each row.
         """
         PrettyTables._validate_table_input(headers, rows)
         table = [headers]
@@ -35,11 +50,11 @@ class PrettyTables(object):
                     data = empty_cell_placeholder
                 formatted_row.append(str(data))
             table.append(formatted_row)
-        formatted_table = PrettyTables._format_table(table)
+        formatted_table = PrettyTables._format_table(table, colors)
         return formatted_table
 
     @staticmethod
-    def _format_table(table):
+    def _format_table(table, colors=None):
         """
         Take table data and format it into a pretty table.
 
@@ -47,22 +62,33 @@ class PrettyTables(object):
 
         Args:
             table: The list defining the table to be formatted.
+            colors (list): A list of TableColors for each row.
         """
         complete_table = []
         col_widths = [max(len(str(item)) for item in column) for column in zip(*table)]
         for line in table:
-            complete_table.append('| ' + ' | '.join('{:{}}'.format(item, col_widths[i])
-                                                    for i, item in enumerate(line)) + ' |')
+            if colors:
+                complete_table.append('| ' + ' | '.join(f'{colors[i]}{item:{col_widths[i]}}{TableColors.ENDC}'
+                                                        for i, item in enumerate(line)) + ' |')
+            else:
+                complete_table.append('| ' + ' | '.join('{:{}}'.format(item, col_widths[i])
+                                                        for i, item in enumerate(line)) + ' |')
+
         formatted_table = '\n'.join(complete_table)
         return formatted_table
 
     @staticmethod
-    def _validate_table_input(headers, rows):
+    def _validate_table_input(headers, rows, colors=None):
         """
         Validate table input.
 
         Checking that headers and rows are set and each are a
         valid list and correct length.
+
+        Args:
+            headers (list): A list of headers for the table.
+            rows (list): A list of lists matching the length of headers for each row.
+            colors (list): A list of TableColors for each column.
         """
         if not headers or not isinstance(headers, list):
             raise ValueError(
@@ -72,6 +98,13 @@ class PrettyTables(object):
             raise ValueError(
                 'Rows are either not set or are not a proper array.'
             )
+        if colors:
+            if not isinstance(colors, list):
+                raise ValueError(
+                    'Colors are set but are not a proper array.'
+                )
+            if len(colors) != len(headers):
+                raise IndexError('The number of colors does not mach the number of columns')
         table_length = len(headers)
         for i, row in enumerate(rows):
             if not isinstance(row, list):
