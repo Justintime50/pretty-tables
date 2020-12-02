@@ -1,20 +1,27 @@
-class PrettyTables():
-    @classmethod
-    def generate_table(cls, headers, rows, empty_cell_placeholder=None):
-        """Generate pretty tables with headers and rows (arrays).
+"""The tables module for the pretty_tables library."""
+
+
+class PrettyTables(object):
+    """A class used to generate pretty tables for console output."""
+
+    @staticmethod
+    def generate_table(headers, rows, empty_cell_placeholder=None):
+        """
+        Generate pretty tables with headers and rows (arrays).
+
         We do this by validating the headers and rows are valid arrays
         and are set, then convert all items to strings and append
         them to their respective row, then append each row to the table.
         We replace empty items with a placeholder and finally return
         the validated, generated, formatted table.
 
-        headers = 1d array
-        rows = 2d array
-        empty_cell_placeholder = whatever you want in place of an empty cell
+        Args:
+            headers (list): a list of headers for the table.
+            rows (list[list]): A list of rows for the table.
+            empty_cell_placeholder: The value to be placed in cells with no data.
         """
-        cls._validate_table_input(headers, rows)
-        table = []
-        table.append(headers)
+        PrettyTables._validate_table_input(headers, rows)
+        table = [headers]
         for row in rows:
             formatted_row = []
             for item in row:
@@ -28,13 +35,18 @@ class PrettyTables():
                     data = empty_cell_placeholder
                 formatted_row.append(str(data))
             table.append(formatted_row)
-        formatted_table = cls._format_table(table)
+        formatted_table = PrettyTables._format_table(table)
         return formatted_table
 
-    @classmethod
-    def _format_table(cls, table):
-        """Take table data and format it into a pretty table
-        including lines for columns and uniform spacing.
+    @staticmethod
+    def _format_table(table):
+        """
+        Take table data and format it into a pretty table.
+
+        This includes adding lines for columns and uniform spacing.
+
+        Args:
+            table: The list defining the table to be formatted.
         """
         complete_table = []
         col_widths = [max(len(str(item)) for item in column) for column in zip(*table)]
@@ -44,10 +56,13 @@ class PrettyTables():
         formatted_table = '\n'.join(complete_table)
         return formatted_table
 
-    @classmethod
-    def _validate_table_input(cls, headers, rows):
-        """Validate table input by checking that headers and rows are set
-        and each are a valid list and correct length.
+    @staticmethod
+    def _validate_table_input(headers, rows):
+        """
+        Validate table input.
+
+        Checking that headers and rows are set and each are a
+        valid list and correct length.
         """
         if not headers or not isinstance(headers, list):
             raise ValueError(
@@ -57,7 +72,6 @@ class PrettyTables():
             raise ValueError(
                 'Rows are either not set or are not a proper array.'
             )
-
         table_length = len(headers)
         for i, row in enumerate(rows):
             if not isinstance(row, list):
