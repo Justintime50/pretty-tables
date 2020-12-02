@@ -52,7 +52,7 @@ class PrettyTables(object):
                     data = empty_cell_placeholder
                 formatted_row.append(data)
             table.append(formatted_row)
-        formatted_table = PrettyTables._format_table(table)
+        formatted_table = PrettyTables._format_table(table, colors)
         return formatted_table
 
     @staticmethod
@@ -130,6 +130,13 @@ class PrettyTables(object):
                 )
             elif len(colors) != len(headers):
                 raise IndexError('The number of colors does not mach the number of columns.')
+        if colors:
+            if not isinstance(colors, list):
+                raise ValueError(
+                    'Colors are set but are not a proper array.'
+                )
+            if len(colors) != len(headers):
+                raise IndexError('The number of colors does not mach the number of columns')
         table_length = len(headers)
         for i, row in enumerate(rows):
             if not isinstance(row, list):
