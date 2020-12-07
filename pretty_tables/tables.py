@@ -19,7 +19,7 @@ class PrettyTables(object):
     """A class used to generate pretty tables for console output."""
 
     @staticmethod
-    def generate_table(headers, rows, empty_cell_placeholder=None, colors=None):
+    def generate_table(headers, rows, empty_cell_placeholder=None, colors=None, truthy=None):
         """
         Generate pretty tables with headers and rows (arrays).
 
@@ -34,6 +34,8 @@ class PrettyTables(object):
             rows (list[list]): A list of rows for the table.
             empty_cell_placeholder: The value to be placed in cells with no data.
             colors (list): A list of TableColors for each row.
+            truthy (int): Index of the column to be compared for truthy values. If truthy is not None
+                truth comparison will override all other formats.
         """
         PrettyTables._validate_table_input(headers, rows)
         table = [headers]
@@ -41,20 +43,20 @@ class PrettyTables(object):
             formatted_row = []
             for item in row:
                 if item is True:
-                    data = 'True'
+                    data = True
                 elif item is False:
-                    data = 'False'
+                    data = False
                 elif item:
                     data = item
                 else:
                     data = empty_cell_placeholder
-                formatted_row.append(str(data))
+                formatted_row.append(data)
             table.append(formatted_row)
-        formatted_table = PrettyTables._format_table(table, colors)
+        formatted_table = PrettyTables._format_table(table, colors, truthy)
         return formatted_table
 
     @staticmethod
-    def _format_table(table, colors=None):
+    def _format_table(table, colors=None, truthy=None):
         """
         Take table data and format it into a pretty table.
 
@@ -62,16 +64,39 @@ class PrettyTables(object):
 
         Args:
             table: The list defining the table to be formatted.
-            colors (list): A list of TableColors for each row.
+            colors (list): A list of TableColors for each row. If truthy is set to True, colors should
+                be set to None, or a list of colors length 2, where the first color is to be used for
+                true values and the second color is to be used for false values.
+            truthy (int): Index of the column to be compared for truthy values. If truthy is not None
+                truth comparison will override all other formats.
         """
         complete_table = []
         col_widths = [max(len(str(item)) for item in column) for column in zip(*table)]
-        for line in table:
-            if colors:
-                complete_table.append('| ' + ' | '.join(f'{colors[i]}{item:{col_widths[i]}}{TableColors.ENDC}'
-                                                        for i, item in enumerate(line)) + ' |')
+        for line_no, line in enumerate(table):
+            if colors or truthy is not None:
+                if truthy is not None:
+                    if colors is not None and (len(colors) != 0 and len(colors) != 2):
+                        raise ValueError(
+                            'When using the truthy option you must either specify two colors, or no colors'
+                        )
+                    if not isinstance(truthy, int) or not 0 < truthy < len(line):
+                        raise ValueError(
+                            f'The column specified for truthy values does not exist. Column {truthy}'
+                        )
+                    if colors is None or len(colors) == 0:
+                        colors = [TableColors.OKGREEN, TableColors.FAIL]
+                    complete_table.append(
+                        '| ' + ' | '.join(
+                            f'{"" if line_no == 0 else colors[0] if bool(line[truthy]) else colors[1]}'
+                            f'{str(item):{col_widths[i]}}{TableColors.ENDC}'
+                            for i, item in enumerate(line)
+                        ) + ' |'
+                    )
+                else:
+                    complete_table.append('| ' + ' | '.join(f'{colors[i]}{str(item):{col_widths[i]}}{TableColors.ENDC}'
+                                                            for i, item in enumerate(line)) + ' |')
             else:
-                complete_table.append('| ' + ' | '.join('{:{}}'.format(item, col_widths[i])
+                complete_table.append('| ' + ' | '.join('{:{}}'.format(str(item), col_widths[i])
                                                         for i, item in enumerate(line)) + ' |')
 
         formatted_table = '\n'.join(complete_table)
