@@ -1,6 +1,6 @@
 import pytest
 import mock
-from pretty_tables import PrettyTables
+from pretty_tables import PrettyTables, TableColors
 
 
 def test_generate_table(headers, rows):
@@ -22,6 +22,49 @@ def test_generate_table_with_colors(headers, rows, colors):
            '| \x1b[92mFalse   \x1b[0m |\n' \
            '| \x1b[94m3 \x1b[0m | \x1b[95mJohn  \x1b[0m | \x1b[1mNo data          \x1b[0m ' \
            '| \x1b[92mFalse   \x1b[0m |'
+
+
+def test_generate_table_with_default_truthy(headers, rows):
+    pretty_table = PrettyTables.generate_table(headers, rows, 'No data', truthy=3)
+    assert pretty_table == \
+           '| ID\x1b[0m | Name  \x1b[0m | Occupation       \x1b[0m | Employed\x1b[0m |\n| \x1b[92m1 \x1b[0m | ' \
+           '\x1b[92mJustin\x1b[0m | \x1b[92mSoftware Engineer\x1b[0m | \x1b[92mTrue    ' \
+           '\x1b[0m |\n| \x1b[91m2 ' \
+           '\x1b[0m | \x1b[91mMisty \x1b[0m | \x1b[91mReceptionist     \x1b[0m | \x1b[91mFalse   ' \
+           '\x1b[0m |\n| \x1b[91m3 \x1b[0m | ' \
+           '\x1b[91mJohn  \x1b[0m | \x1b[91mNo data          \x1b[0m | \x1b[91mFalse   \x1b[0m |'
+
+
+def test_generate_table_with_default_truthy_custom(headers, rows):
+    pretty_table = PrettyTables.generate_table(headers, rows, 'No data',
+                                               colors=[TableColors.OKCYAN, TableColors.HEADER], truthy=3)
+    assert pretty_table == \
+           '| ID\x1b[0m | Name  \x1b[0m | Occupation       \x1b[0m | Employed\x1b[0m |\n' \
+           '| \x1b[96m1 \x1b[0m | \x1b[96mJustin\x1b[0m | \x1b[96mSoftware Engineer\x1b[0m | ' \
+           '\x1b[96mTrue    \x1b[0m |\n' \
+           '| \x1b[95m2 \x1b[0m | \x1b[95mMisty \x1b[0m | \x1b[95mReceptionist     \x1b[0m | ' \
+           '\x1b[95mFalse   \x1b[0m |\n' \
+           '| \x1b[95m3 \x1b[0m | \x1b[95mJohn  \x1b[0m | \x1b[95mNo data          \x1b[0m | ' \
+           '\x1b[95mFalse   \x1b[0m |'
+
+
+def test_generate_table_with_default_truthy_not_enough_colors(headers, rows):
+    with pytest.raises(ValueError) as exc:
+        _ = PrettyTables.generate_table(headers, rows, 'No data',
+                                        colors=[TableColors.OKCYAN], truthy=3)
+    assert 'When using the truthy option you must either specify two colors, or no colors' in str(exc.value)
+
+
+def test_generate_table_with_default_truthy_bad_column_index(headers, rows):
+    with pytest.raises(ValueError) as exc:
+        _ = PrettyTables.generate_table(headers, rows, 'No data', truthy='bad')
+    assert 'The column specified for truthy values does not exist. Column bad' in str(exc.value)
+
+
+def test_generate_table_with_default_truthy_out_of_range_column(headers, rows):
+    with pytest.raises(ValueError) as exc:
+        _ = PrettyTables.generate_table(headers, rows, 'No data', truthy=5)
+    assert 'The column specified for truthy values does not exist. Column 5' in str(exc.value)
 
 
 def test_validate_table_input_no_headers(rows):
