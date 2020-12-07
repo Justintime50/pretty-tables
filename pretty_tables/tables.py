@@ -52,7 +52,7 @@ class PrettyTables(object):
                     data = empty_cell_placeholder
                 formatted_row.append(data)
             table.append(formatted_row)
-        formatted_table = PrettyTables._format_table(table, colors)
+        formatted_table = PrettyTables._format_table(table, colors, truthy)
         return formatted_table
 
     @staticmethod
