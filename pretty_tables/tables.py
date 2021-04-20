@@ -18,15 +18,9 @@ class PrettyTables():
         for row in rows:
             formatted_row = []
             for item in row:
-                if item is True:
-                    data = 'True'
-                elif item is False:
-                    data = 'False'
-                elif item:
-                    data = item
-                else:
-                    data = empty_cell_placeholder
-                formatted_row.append(str(data))
+                if item is None:
+                    item = empty_cell_placeholder
+                formatted_row.append(str(item))
             table.append(formatted_row)
         formatted_table = cls._format_table(table)
         return formatted_table
@@ -39,6 +33,10 @@ class PrettyTables():
         complete_table = []
         col_widths = [max(len(str(item)) for item in column) for column in zip(*table)]
         for line in table:
+            if line == table[1]:
+                # Add horizontal separator between headers and rows
+                complete_table.append('| ' + ' | '.join('{:{}}'.format('-' * col_widths[i], col_widths[i])
+                                                        for i, item in enumerate(line)) + ' |')
             complete_table.append('| ' + ' | '.join('{:{}}'.format(item, col_widths[i])
                                                     for i, item in enumerate(line)) + ' |')
         formatted_table = '\n'.join(complete_table)

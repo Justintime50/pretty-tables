@@ -1,7 +1,6 @@
-import pytest
 import mock
+import pytest
 from pretty_tables import PrettyTables
-
 
 TABLE = None
 HEADERS = ['ID', 'Name', 'Occupation', 'Employed']
@@ -13,8 +12,18 @@ ROWS = [
 
 
 def test_generate_table():
+    pretty_table = PrettyTables.generate_table(HEADERS, ROWS)
+    assert pretty_table == """| ID | Name   | Occupation        | Employed |
+| -- | ------ | ----------------- | -------- |
+| 1  | Justin | Software Engineer | True     |
+| 2  | Misty  | Receptionist      | False    |
+| 3  | John   | None              | False    |"""
+
+
+def test_generate_table_empty_placeholder_value():
     pretty_table = PrettyTables.generate_table(HEADERS, ROWS, 'No data')
     assert pretty_table == """| ID | Name   | Occupation        | Employed |
+| -- | ------ | ----------------- | -------- |
 | 1  | Justin | Software Engineer | True     |
 | 2  | Misty  | Receptionist      | False    |
 | 3  | John   | No data           | False    |"""
