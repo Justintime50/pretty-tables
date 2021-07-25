@@ -1,5 +1,4 @@
 import pytest
-import mock
 from pretty_tables import PrettyTables, TableColors
 
 
