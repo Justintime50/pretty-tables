@@ -24,6 +24,19 @@ Pretty Tables will create uniformly dispersed columns based on the input given a
 
 You can also color each column differently by using the `colors` argument and passing a list of colors from the `pretty_tables.TableColors` class that matches the length of the headers list.
 
+
+Available Colors are:
+
+  - HEADER
+  - OKBLUE
+  - OKCYAN
+  - OKGREEN
+  - WARNING
+  - FAIL
+  - ENDC
+  - BOLD
+  - UNDERLINE
+  
 ## Install
 
 ```bash
