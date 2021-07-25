@@ -130,13 +130,6 @@ class PrettyTables(object):
                 )
             elif len(colors) != len(headers):
                 raise IndexError('The number of colors does not mach the number of columns.')
-        if colors:
-            if not isinstance(colors, list):
-                raise ValueError(
-                    'Colors are set but are not a proper array.'
-                )
-            if len(colors) != len(headers):
-                raise IndexError('The number of colors does not mach the number of columns')
         table_length = len(headers)
         for i, row in enumerate(rows):
             if not isinstance(row, list):
