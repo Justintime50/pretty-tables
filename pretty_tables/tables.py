@@ -1,8 +1,10 @@
-"""The tables module for the pretty_tables library."""
+"""The tables module for the pretty_tables library.
+"""
 
 
 class TableColors:
-    """A class to contain constants for colors for the table."""
+    """A class to contain constants for colors for the table.
+    """
 
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
@@ -16,12 +18,12 @@ class TableColors:
 
 
 class PrettyTables(object):
-    """A class used to generate pretty tables for console output."""
+    """A class used to generate pretty tables for console output.
+    """
 
     @classmethod
     def generate_table(cls, headers, rows, empty_cell_placeholder=None, colors=None, truthy=None):
-        """
-        Generate pretty tables with headers and rows (arrays).
+        """Generate pretty tables with headers and rows (arrays).
 
         We do this by validating the headers and rows are valid arrays
         and are set, then convert all items to strings and append
@@ -57,8 +59,7 @@ class PrettyTables(object):
 
     @staticmethod
     def _format_table(table, colors=None, truthy=None):
-        """
-        Take table data and format it into a pretty table.
+        """Take table data and format it into a pretty table.
 
         This includes adding lines for columns and uniform spacing.
 
@@ -104,8 +105,7 @@ class PrettyTables(object):
 
     @staticmethod
     def _validate_table_input(headers, rows, colors=None):
-        """
-        Validate table input.
+        """Validate table input.
 
         Checking that headers and rows are set and each are a
         valid list and correct length.
@@ -129,7 +129,7 @@ class PrettyTables(object):
                     'Colors are set but are not a proper array.'
                 )
             elif len(colors) != len(headers):
-                raise IndexError('The number of colors does not mach the number of columns.')
+                raise IndexError('The number of colors does not match the number of columns.')
         table_length = len(headers)
         for i, row in enumerate(rows):
             if not isinstance(row, list):

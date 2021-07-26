@@ -4,47 +4,48 @@ from pretty_tables import PrettyTables, TableColors
 
 def test_generate_table(headers, rows):
     pretty_table = PrettyTables.generate_table(headers, rows, 'No data')
-    assert pretty_table == "| ID | Name   | Occupation        | Employed |\n" \
-                           "| 1  | Justin | Software Engineer | True     |\n" \
-                           "| 2  | Misty  | Receptionist      | False    |\n" \
-                           "| 3  | John   | No data           | False    |"
+    assert pretty_table == ("| ID | Name   | Occupation        | Employed |\n"
+                            "| 1  | Justin | Software Engineer | True     |\n"
+                            "| 2  | Misty  | Receptionist      | False    |\n"
+                            "| 3  | John   | No data           | False    |")
 
 
 def test_generate_table_with_colors(headers, rows, colors):
     pretty_table = PrettyTables.generate_table(headers, rows, 'No data', colors)
-    assert pretty_table == \
-           '| \x1b[94mID\x1b[0m | \x1b[95mName  \x1b[0m | \x1b[1mOccupation       \x1b[0m ' \
-           '| \x1b[92mEmployed\x1b[0m |\n' \
-           '| \x1b[94m1 \x1b[0m | \x1b[95mJustin\x1b[0m | \x1b[1mSoftware Engineer\x1b[0m ' \
-           '| \x1b[92mTrue    \x1b[0m |\n' \
-           '| \x1b[94m2 \x1b[0m | \x1b[95mMisty \x1b[0m | \x1b[1mReceptionist     \x1b[0m ' \
-           '| \x1b[92mFalse   \x1b[0m |\n' \
-           '| \x1b[94m3 \x1b[0m | \x1b[95mJohn  \x1b[0m | \x1b[1mNo data          \x1b[0m ' \
+    assert pretty_table ==(
+           '| \x1b[94mID\x1b[0m | \x1b[95mName  \x1b[0m | \x1b[1mOccupation       \x1b[0m '
+           '| \x1b[92mEmployed\x1b[0m |\n'
+           '| \x1b[94m1 \x1b[0m | \x1b[95mJustin\x1b[0m | \x1b[1mSoftware Engineer\x1b[0m '
+           '| \x1b[92mTrue    \x1b[0m |\n'
+           '| \x1b[94m2 \x1b[0m | \x1b[95mMisty \x1b[0m | \x1b[1mReceptionist     \x1b[0m '
+           '| \x1b[92mFalse   \x1b[0m |\n'
+           '| \x1b[94m3 \x1b[0m | \x1b[95mJohn  \x1b[0m | \x1b[1mNo data          \x1b[0m '
            '| \x1b[92mFalse   \x1b[0m |'
-
+    )
 
 def test_generate_table_with_default_truthy(headers, rows):
     pretty_table = PrettyTables.generate_table(headers, rows, 'No data', truthy=3)
-    assert pretty_table == \
-           '| ID\x1b[0m | Name  \x1b[0m | Occupation       \x1b[0m | Employed\x1b[0m |\n| \x1b[92m1 \x1b[0m | ' \
-           '\x1b[92mJustin\x1b[0m | \x1b[92mSoftware Engineer\x1b[0m | \x1b[92mTrue    ' \
-           '\x1b[0m |\n| \x1b[91m2 ' \
-           '\x1b[0m | \x1b[91mMisty \x1b[0m | \x1b[91mReceptionist     \x1b[0m | \x1b[91mFalse   ' \
-           '\x1b[0m |\n| \x1b[91m3 \x1b[0m | ' \
+    assert pretty_table == (
+           '| ID\x1b[0m | Name  \x1b[0m | Occupation       \x1b[0m | Employed\x1b[0m |\n| \x1b[92m1 \x1b[0m | '
+           '\x1b[92mJustin\x1b[0m | \x1b[92mSoftware Engineer\x1b[0m | \x1b[92mTrue    '
+           '\x1b[0m |\n| \x1b[91m2 '
+           '\x1b[0m | \x1b[91mMisty \x1b[0m | \x1b[91mReceptionist     \x1b[0m | \x1b[91mFalse   '
+           '\x1b[0m |\n| \x1b[91m3 \x1b[0m | '
            '\x1b[91mJohn  \x1b[0m | \x1b[91mNo data          \x1b[0m | \x1b[91mFalse   \x1b[0m |'
-
+    )
 
 def test_generate_table_with_default_truthy_custom(headers, rows):
     pretty_table = PrettyTables.generate_table(headers, rows, 'No data',
                                                colors=[TableColors.OKCYAN, TableColors.HEADER], truthy=3)
-    assert pretty_table == \
-           '| ID\x1b[0m | Name  \x1b[0m | Occupation       \x1b[0m | Employed\x1b[0m |\n' \
-           '| \x1b[96m1 \x1b[0m | \x1b[96mJustin\x1b[0m | \x1b[96mSoftware Engineer\x1b[0m | ' \
-           '\x1b[96mTrue    \x1b[0m |\n' \
-           '| \x1b[95m2 \x1b[0m | \x1b[95mMisty \x1b[0m | \x1b[95mReceptionist     \x1b[0m | ' \
-           '\x1b[95mFalse   \x1b[0m |\n' \
-           '| \x1b[95m3 \x1b[0m | \x1b[95mJohn  \x1b[0m | \x1b[95mNo data          \x1b[0m | ' \
+    assert pretty_table == (
+           '| ID\x1b[0m | Name  \x1b[0m | Occupation       \x1b[0m | Employed\x1b[0m |\n'
+           '| \x1b[96m1 \x1b[0m | \x1b[96mJustin\x1b[0m | \x1b[96mSoftware Engineer\x1b[0m | '
+           '\x1b[96mTrue    \x1b[0m |\n'
+           '| \x1b[95m2 \x1b[0m | \x1b[95mMisty \x1b[0m | \x1b[95mReceptionist     \x1b[0m | '
+           '\x1b[95mFalse   \x1b[0m |\n'
+           '| \x1b[95m3 \x1b[0m | \x1b[95mJohn  \x1b[0m | \x1b[95mNo data          \x1b[0m | '
            '\x1b[95mFalse   \x1b[0m |'
+    )
 
 
 def test_generate_table_with_default_truthy_not_enough_colors(headers, rows):
@@ -103,7 +104,7 @@ def test_validate_table_input_bad_colors(headers, rows):
 def test_validate_table_input_colors_bad_length(headers, rows):
     with pytest.raises(IndexError) as error:
         PrettyTables._validate_table_input(headers, rows, colors=[1, 2])
-    assert 'The number of colors does not mach the number of columns.' in str(error.value)
+    assert 'The number of colors does not match the number of columns.' in str(error.value)
 
 
 def test_validate_table_input_bad_row_in_rows():
