@@ -61,6 +61,21 @@ table = PrettyTables.generate_table(
 print(table)
 ```
 
+You can also color each column differently by using the `colors` argument and passing a list of colors from the `pretty_tables.TableColors` class that matches the length of the headers list.
+
+
+Available Colors are:
+
+- HEADER
+- OKBLUE
+- OKCYAN
+- OKGREEN
+- WARNING
+- FAIL
+- ENDC
+- BOLD
+- UNDERLINE
+
 ## Development
 
 ```bash
