@@ -22,7 +22,7 @@ Pretty Tables will create uniformly dispersed columns based on the input given a
 | 2  | Misty  | Receptionist      | False    |
 | 3  | John   | No data           | False    |
 ```
-  
+
 ## Install
 
 ```bash

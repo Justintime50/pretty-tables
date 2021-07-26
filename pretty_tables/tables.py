@@ -82,7 +82,7 @@ class PrettyTables(object):
                         raise ValueError(
                             f'The column specified for truthy values does not exist. Column {truthy}'
                         )
-                    # Default truthy colors if colors no colors are specified.
+                    # Default truthy colors if no colors are specified.
                     if not colors or len(colors) == 0:
                         colors = [TableColors.OKGREEN, TableColors.FAIL]
                     complete_table.append(
