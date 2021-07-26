@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v1.2.0 (2021-07-26)
+
+* Adds the ability to change column colors statically (index) or dynamically based on truthyness (closes #1, thanks @gagelarsen)
+
 ## v1.1.0 (2021-04-20)
 
 * Adds horizontal break between header and table content
