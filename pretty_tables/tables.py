@@ -44,15 +44,9 @@ class PrettyTables(object):
         for row in rows:
             formatted_row = []
             for item in row:
-                if item is True:
-                    data = True
-                elif item is False:
-                    data = False
-                elif item:
-                    data = item
-                else:
-                    data = empty_cell_placeholder
-                formatted_row.append(data)
+                if item is None:
+                    item = empty_cell_placeholder
+                formatted_row.append(item)
             table.append(formatted_row)
         formatted_table = cls._format_table(table, colors, truthy)
         return formatted_table
@@ -74,17 +68,22 @@ class PrettyTables(object):
         complete_table = []
         col_widths = [max(len(str(item)) for item in column) for column in zip(*table)]
         for line_no, line in enumerate(table):
-            if colors or truthy is not None:
-                if truthy is not None:
-                    if colors is not None and (len(colors) != 0 and len(colors) != 2):
+            # Check for truthyness and colors.
+            if colors or truthy:
+                # Check if truthy
+                if truthy:
+                    # Check has the right number of colors for truthy coloring.
+                    if colors and (len(colors) != 0 and len(colors) != 2):
                         raise ValueError(
                             'When using the truthy option you must either specify two colors, or no colors'
                         )
+                    # Check the truthy column exist.
                     if not isinstance(truthy, int) or not 0 < truthy < len(line):
                         raise ValueError(
                             f'The column specified for truthy values does not exist. Column {truthy}'
                         )
-                    if colors is None or len(colors) == 0:
+                    # Default truthy colors if colors no colors are specified.
+                    if not colors or len(colors) == 0:
                         colors = [TableColors.OKGREEN, TableColors.FAIL]
                     complete_table.append(
                         '| ' + ' | '.join(
@@ -94,6 +93,7 @@ class PrettyTables(object):
                         ) + ' |'
                     )
                 else:
+                    # Set colors.
                     complete_table.append('| ' + ' | '.join(f'{colors[i]}{str(item):{col_widths[i]}}{TableColors.ENDC}'
                                                             for i, item in enumerate(line)) + ' |')
             else:
