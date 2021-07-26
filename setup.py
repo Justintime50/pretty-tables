@@ -1,11 +1,19 @@
 import setuptools
 
-with open("README.md", "r") as fh:
+with open('README.md', 'r') as fh:
     long_description = fh.read()
+
+DEV_REQUIREMENTS = [
+    'coveralls == 3.*',
+    'flake8',
+    'mock == 4.*',
+    'pytest == 6.*',
+    'pytest-cov == 2.*',
+]
 
 setuptools.setup(
     name='pretty-tables',
-    version='1.0.0',
+    version='1.1.0',
     description='Create pretty tables from headers and rows, perfect for console output.',
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -19,13 +27,7 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     extras_require={
-        'dev': [
-            'pytest >= 6.0.0',
-            'pytest-cov >= 2.10.0',
-            'coveralls >= 2.1.2',
-            'flake8 >= 3.8.0',
-            'mock >= 4.0.0',
-        ]
+        'dev': DEV_REQUIREMENTS
     },
     python_requires='>=3.6',
 )
