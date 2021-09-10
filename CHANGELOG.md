@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v1.3.0 (2021-09-10)
+
+* Re-adds the horizontal break between header and table content that was accidentally removed in `v1.2.0`
+
 ## v1.2.0 (2021-07-26)
 
 * Adds the ability to change column colors statically (index) or dynamically based on truthyness (closes #1, thanks @gagelarsen)
