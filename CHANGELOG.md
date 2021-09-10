@@ -3,6 +3,7 @@
 ## v1.3.0 (2021-09-10)
 
 * Re-adds the horizontal break between header and table content that was accidentally removed in `v1.2.0`
+* Bumps minimum Python version to 3.7
 
 ## v1.2.0 (2021-07-26)
 
