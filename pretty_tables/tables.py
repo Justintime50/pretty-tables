@@ -1,10 +1,5 @@
-"""The tables module for the pretty_tables library.
-"""
-
-
 class TableColors:
-    """A class to contain constants for colors for the table.
-    """
+    """A class to contain constants for colors for the table."""
 
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
@@ -18,8 +13,7 @@ class TableColors:
 
 
 class PrettyTables(object):
-    """A class used to generate pretty tables for console output.
-    """
+    """A class used to generate pretty tables for console output."""
 
     @classmethod
     def generate_table(cls, headers, rows, empty_cell_placeholder=None, colors=None, truthy=None):
@@ -68,6 +62,13 @@ class PrettyTables(object):
         complete_table = []
         col_widths = [max(len(str(item)) for item in column) for column in zip(*table)]
         for line_no, line in enumerate(table):
+            if line == table[1]:
+                # Add horizontal separator between headers and rows
+                complete_table.append(
+                    '| '
+                    + ' | '.join('{:{}}'.format('-' * col_widths[i], col_widths[i]) for i, item in enumerate(line))
+                    + ' |'
+                )
             # Check for truthyness and colors.
             if colors or truthy:
                 # Check if truthy
@@ -79,26 +80,32 @@ class PrettyTables(object):
                         )
                     # Check the truthy column exist.
                     if not isinstance(truthy, int) or not 0 < truthy < len(line):
-                        raise ValueError(
-                            f'The column specified for truthy values does not exist. Column {truthy}'
-                        )
+                        raise ValueError(f'The column specified for truthy values does not exist. Column {truthy}')
                     # Default truthy colors if no colors are specified.
                     if not colors or len(colors) == 0:
                         colors = [TableColors.OKGREEN, TableColors.FAIL]
                     complete_table.append(
-                        '| ' + ' | '.join(
+                        '| '
+                        + ' | '.join(
                             f'{"" if line_no == 0 else colors[0] if bool(line[truthy]) else colors[1]}'
                             f'{str(item):{col_widths[i]}}{TableColors.ENDC}'
                             for i, item in enumerate(line)
-                        ) + ' |'
+                        )
+                        + ' |'
                     )
                 else:
                     # Set colors.
-                    complete_table.append('| ' + ' | '.join(f'{colors[i]}{str(item):{col_widths[i]}}{TableColors.ENDC}'
-                                                            for i, item in enumerate(line)) + ' |')
+                    complete_table.append(
+                        '| '
+                        + ' | '.join(
+                            f'{colors[i]}{str(item):{col_widths[i]}}{TableColors.ENDC}' for i, item in enumerate(line)
+                        )
+                        + ' |'
+                    )
             else:
-                complete_table.append('| ' + ' | '.join('{:{}}'.format(str(item), col_widths[i])
-                                                        for i, item in enumerate(line)) + ' |')
+                complete_table.append(
+                    '| ' + ' | '.join('{:{}}'.format(str(item), col_widths[i]) for i, item in enumerate(line)) + ' |'
+                )
 
         formatted_table = '\n'.join(complete_table)
         return formatted_table
@@ -116,26 +123,18 @@ class PrettyTables(object):
             colors (list): A list of TableColors for each column.
         """
         if not headers or not isinstance(headers, list):
-            raise ValueError(
-                'Headers are either not set or are not a proper array.'
-            )
+            raise ValueError('Headers are either not set or are not a proper array.')
         elif not rows or not isinstance(rows, list):
-            raise ValueError(
-                'Rows are either not set or are not a proper array.'
-            )
+            raise ValueError('Rows are either not set or are not a proper array.')
         if colors:
             if not isinstance(colors, list):
-                raise ValueError(
-                    'Colors are set but are not a proper array.'
-                )
+                raise ValueError('Colors are set but are not a proper array.')
             elif len(colors) != len(headers):
                 raise IndexError('The number of colors does not match the number of columns.')
         table_length = len(headers)
         for i, row in enumerate(rows):
             if not isinstance(row, list):
-                raise IndexError(
-                    f'Row {i + 1} is not a proper array.'
-                )
+                raise IndexError(f'Row {i + 1} is not a proper array.')
             row_length = len(row)
             if row_length != table_length:
                 raise IndexError(

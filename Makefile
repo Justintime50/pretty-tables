@@ -24,7 +24,7 @@ clean:
 ## lint - Lint the project
 lint:
 	venv/bin/flake8 pretty_tables/*.py
-	venv/bin/flake8 test/*.py
+	venv/bin/flake8 test/unit/*.py
 
 ## test - Test the project
 test:
