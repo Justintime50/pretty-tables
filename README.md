@@ -9,7 +9,7 @@ Create pretty tables from headers and rows, perfect for console output.
 [![PyPi](https://img.shields.io/pypi/v/pretty-tables)](https://pypi.org/project/pretty-tables/)
 [![Licence](https://img.shields.io/github/license/justintime50/pretty-tables)](LICENSE)
 
-<img src="assets/showcase.png" alt="Showcase">
+<img src="https://raw.githubusercontent.com/justintime50/assets/main/src/pretty-tables/showcase.png" alt="Showcase">
 
 </div>
 
@@ -93,4 +93,3 @@ make coverage
 ## Attribution
 
 - [Stack Overflow question on formatting tables for console](https://stackoverflow.com/a/8356620/865091)
-- Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
