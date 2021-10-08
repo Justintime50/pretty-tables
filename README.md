@@ -31,9 +31,6 @@ pip3 install pretty-tables
 
 # Install locally
 make install
-
-# Get Makefile help
-make help
 ```
 
 ## Usage
@@ -80,14 +77,8 @@ You can also color each column differently by using the `colors` argument and pa
 ## Development
 
 ```bash
-# Lint the project
-make lint
-
-# Run tests
-make test
-
-# Run test coverage
-make coverage
+# Get a comprehensive list of development tools
+make help
 ```
 
 ## Attribution

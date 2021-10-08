@@ -1,4 +1,5 @@
 import pytest
+
 from pretty_tables import PrettyTables, TableColors
 
 
