@@ -14,7 +14,7 @@ DEV_REQUIREMENTS = [
 
 setuptools.setup(
     name='pretty-tables',
-    version='1.3.0',
+    version='2.0.0',
     description='Create pretty tables from headers and rows, perfect for console output.',
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -30,5 +30,5 @@ setuptools.setup(
     extras_require={
         'dev': DEV_REQUIREMENTS,
     },
-    python_requires='>=3.7',
+    python_requires='>=3.7, <4',
 )

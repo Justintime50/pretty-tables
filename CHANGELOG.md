@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## v2.0.0 (TODO)
+
+* Refactored the entire app to create instances of a table and perform actions on them such as `generate` (see README for info)
+* Added missing white and black colors, changed how to invoke the colors (see README for info)
+* Validate `color` parameter which was previously skipped
+* Various quality of life improvements both for the user and for maintainers of this package
+* Overhauls documentation providing all customization options (closes #2)
+
 ## v1.3.0 (2021-09-10)
 
 * Re-adds the horizontal break between header and table content that was accidentally removed in `v1.2.0`

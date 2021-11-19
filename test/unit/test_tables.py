@@ -1,13 +1,17 @@
 import pytest
 
-from pretty_tables import PrettyTables, TableColors
+import pretty_tables
 
 
 def test_generate_table(headers, rows):
-    pretty_table = PrettyTables.generate_table(headers, rows, 'No data')
+    pretty_table = pretty_tables.PrettyTable(
+        headers,
+        rows,
+    )
+    output = pretty_table.generate(empty_cell_placeholder='No data')
 
     # fmt: off
-    assert pretty_table == (
+    assert output == (
         '| ID | Name   | Occupation        | Employed |\n'
         '| -- | ------ | ----------------- | -------- |\n'
         '| 1  | Justin | Software Engineer | True     |\n'
@@ -18,10 +22,14 @@ def test_generate_table(headers, rows):
 
 
 def test_generate_table_with_colors(headers, rows, colors):
-    pretty_table = PrettyTables.generate_table(headers, rows, 'No data', colors)
+    pretty_table = pretty_tables.PrettyTable(
+        headers,
+        rows,
+    )
+    output = pretty_table.generate(empty_cell_placeholder='No data', colors=colors)
 
     # fmt: off
-    assert pretty_table == (
+    assert output == (
         '| \x1b[94mID\x1b[0m | \x1b[95mName  \x1b[0m | \x1b[1mOccupation       \x1b[0m | \x1b[92mEmployed\x1b[0m |\n'
         '| -- | ------ | ----------------- | -------- |\n'
         '| \x1b[94m1 \x1b[0m | \x1b[95mJustin\x1b[0m | \x1b[1mSoftware Engineer\x1b[0m | \x1b[92mTrue    \x1b[0m |\n'
@@ -32,10 +40,14 @@ def test_generate_table_with_colors(headers, rows, colors):
 
 
 def test_generate_table_with_default_truthy(headers, rows):
-    pretty_table = PrettyTables.generate_table(headers, rows, 'No data', truthy=3)
+    pretty_table = pretty_tables.PrettyTable(
+        headers,
+        rows,
+    )
+    output = pretty_table.generate(empty_cell_placeholder='No data', truthy=3)
 
     # fmt: off
-    assert pretty_table == (
+    assert output == (
         '| ID\x1b[0m | Name  \x1b[0m | Occupation       \x1b[0m | Employed\x1b[0m |\n'
         '| -- | ------ | ----------------- | -------- |\n'
         '| \x1b[92m1 \x1b[0m | \x1b[92mJustin\x1b[0m | \x1b[92mSoftware Engineer\x1b[0m | \x1b[92mTrue    \x1b[0m |\n'
@@ -45,13 +57,17 @@ def test_generate_table_with_default_truthy(headers, rows):
     # fmt: on
 
 
-def test_generate_table_with_default_truthy_custom(headers, rows):
-    pretty_table = PrettyTables.generate_table(
-        headers, rows, 'No data', colors=[TableColors.OKCYAN, TableColors.HEADER], truthy=3
+def test_generate_table_with_custom_truthy_colors(headers, rows):
+    pretty_table = pretty_tables.PrettyTable(
+        headers,
+        rows,
+    )
+    output = pretty_table.generate(
+        empty_cell_placeholder='No data', colors=[pretty_tables.Colors.cyan, pretty_tables.Colors.purple], truthy=3
     )
 
     # fmt: off
-    assert pretty_table == (
+    assert output == (
         '| ID\x1b[0m | Name  \x1b[0m | Occupation       \x1b[0m | Employed\x1b[0m |\n'
         '| -- | ------ | ----------------- | -------- |\n'
         '| \x1b[96m1 \x1b[0m | \x1b[96mJustin\x1b[0m | \x1b[96mSoftware Engineer\x1b[0m | \x1b[96mTrue    \x1b[0m |\n'
@@ -63,67 +79,76 @@ def test_generate_table_with_default_truthy_custom(headers, rows):
 
 def test_generate_table_with_default_truthy_not_enough_colors(headers, rows):
     with pytest.raises(ValueError) as exc:
-        _ = PrettyTables.generate_table(headers, rows, 'No data', colors=[TableColors.OKCYAN], truthy=3)
+        _ = pretty_tables.PrettyTable(
+            headers,
+            rows,
+        ).generate(empty_cell_placeholder='No data', colors=[pretty_tables.Colors.cyan], truthy=3)
 
-    assert 'When using the truthy option you must either specify two colors, or no colors' in str(exc.value)
+    assert 'When using the truthy option, you must specify two colors, or no colors' in str(exc.value)
 
 
 def test_generate_table_with_default_truthy_bad_column_index(headers, rows):
     with pytest.raises(ValueError) as exc:
-        _ = PrettyTables.generate_table(headers, rows, 'No data', truthy='bad')
+        _ = pretty_tables.PrettyTable(
+            headers,
+            rows,
+        ).generate(empty_cell_placeholder='No data', truthy='bad')
 
-    assert 'The column specified for truthy values does not exist. Column bad' in str(exc.value)
+    assert 'The column specified for truthy values does not exist. Column: bad' in str(exc.value)
 
 
 def test_generate_table_with_default_truthy_out_of_range_column(headers, rows):
     with pytest.raises(ValueError) as exc:
-        _ = PrettyTables.generate_table(headers, rows, 'No data', truthy=5)
+        _ = pretty_tables.PrettyTable(
+            headers,
+            rows,
+        ).generate(empty_cell_placeholder='No data', truthy=5)
 
-    assert 'The column specified for truthy values does not exist. Column 5' in str(exc.value)
+    assert 'The column specified for truthy values does not exist. Column: 5' in str(exc.value)
 
 
 def test_validate_table_input_no_headers(rows):
     headers = None
     with pytest.raises(ValueError) as error:
-        PrettyTables._validate_table_input(headers, rows)
+        pretty_tables.PrettyTable(headers, rows)._validate_table_input()
 
-    assert 'Headers are either not set or are not a proper array.' in str(error.value)
+    assert 'Headers are either not set or are not a proper list.' in str(error.value)
 
 
 def test_validate_table_input_bad_headers(rows):
     headers = '123'
     with pytest.raises(ValueError) as error:
-        PrettyTables._validate_table_input(headers, rows)
+        pretty_tables.PrettyTable(headers, rows)._validate_table_input()
 
-    assert 'Headers are either not set or are not a proper array.' in str(error.value)
+    assert 'Headers are either not set or are not a proper list.' in str(error.value)
 
 
 def test_validate_table_input_no_rows(headers):
     rows = None
     with pytest.raises(ValueError) as error:
-        PrettyTables._validate_table_input(headers, rows)
+        pretty_tables.PrettyTable(headers, rows)._validate_table_input()
 
-    assert 'Rows are either not set or are not a proper array.' in str(error.value)
+    assert 'Rows are either not set or are not a proper list.' in str(error.value)
 
 
 def test_validate_table_input_bad_rows(headers):
     rows = '123'
     with pytest.raises(ValueError) as error:
-        PrettyTables._validate_table_input(headers, rows)
+        pretty_tables.PrettyTable(headers, rows)._validate_table_input()
 
-    assert 'Rows are either not set or are not a proper array.' in str(error.value)
+    assert 'Rows are either not set or are not a proper list.' in str(error.value)
 
 
 def test_validate_table_input_bad_colors(headers, rows):
     with pytest.raises(ValueError) as error:
-        PrettyTables._validate_table_input(headers, rows, colors='asdf')
+        pretty_tables.PrettyTable(headers, rows)._validate_table_input(colors='asdf')
 
-    assert 'Colors are set but are not a proper array.' in str(error.value)
+    assert 'Colors are set but are not a proper list.' in str(error.value)
 
 
 def test_validate_table_input_colors_bad_length(headers, rows):
     with pytest.raises(IndexError) as error:
-        PrettyTables._validate_table_input(headers, rows, colors=[1, 2])
+        pretty_tables.PrettyTable(headers, rows)._validate_table_input(colors=[1, 2])
 
     assert 'The number of colors does not match the number of columns.' in str(error.value)
 
@@ -134,9 +159,9 @@ def test_validate_table_input_bad_row_in_rows():
         '123',
     ]
     with pytest.raises(IndexError) as error:
-        PrettyTables._validate_table_input(headers, rows)
+        pretty_tables.PrettyTable(headers, rows)._validate_table_input()
 
-    assert 'Row 1 is not a proper array.' in str(error.value)
+    assert 'Row 1 is not a proper list.' in str(error.value)
 
 
 def test_validate_table_input_mismatching_column_length():
@@ -145,6 +170,6 @@ def test_validate_table_input_mismatching_column_length():
         ['123'],
     ]
     with pytest.raises(IndexError) as error:
-        PrettyTables._validate_table_input(headers, rows)
+        pretty_tables.PrettyTable(headers, rows)._validate_table_input()
 
     assert 'Row 1 has 1 column(s) which does not match the table columns of 2.' in str(error.value)
