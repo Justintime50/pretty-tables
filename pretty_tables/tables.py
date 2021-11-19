@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import List, Optional
 
 
 class Colors:
@@ -23,15 +23,15 @@ class Colors:
 
 
 class PrettyTable:
-    def __init__(self, headers: list, rows: list[list]):
+    def __init__(self, headers: List, rows: List[List]):
         self.headers = headers
         self.rows = rows
 
     def generate(
         self,
         empty_cell_placeholder: Optional[str] = None,
-        colors: Optional[list] = None,
-        truthy: Optional[int] = None,
+        colors: Optional[List] = None,
+        truthy: Optional[List] = None,
     ) -> str:
         """Generate pretty tables with headers and rows.
 
@@ -65,7 +65,7 @@ class PrettyTable:
         return formatted_table
 
     @staticmethod
-    def _format_table(table: list, colors: Optional[list] = None, truthy: Optional[int] = None) -> str:
+    def _format_table(table: List, colors: Optional[List] = None, truthy: Optional[int] = None) -> str:
         """Take table data and format it into a pretty table.
 
         This includes adding lines for columns and uniform spacing.
@@ -146,7 +146,7 @@ class PrettyTable:
 
         return formatted_table
 
-    def _validate_table_input(self, truthy: Optional[int] = None, colors: Optional[list] = None):
+    def _validate_table_input(self, truthy: Optional[int] = None, colors: Optional[List] = None):
         """Validate table input checking that headers and rows are set and each are a
         valid list and correct length.
 
