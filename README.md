@@ -41,12 +41,6 @@ rows = [
     [3, 'John', None, False],
 ]
 
-# Create a new pretty table
-my_table = pretty_tables.PrettyTable(
-    headers=headers,
-    rows=rows,
-)
-
 # Add optional custom colors to each column
 colors = [
     pretty_tables.Colors.red,
@@ -56,10 +50,12 @@ colors = [
 ]
 
 # Generate the pretty table output
-# Optionally pass `truthy` here with an integer of the column you want to check for truthy values on
-table = my_table.generate(
+table = pretty_tables.create(
+    headers=headers,
+    rows=rows,
     empty_cell_placeholder='No data',  # Optional: override the default `None` with a custom string
-    colors=colors,  # Optional
+    colors=colors,  # Optional: mutually exclusive with `truthy`
+    # truthy=3,  # Optional: integer of the column you want to check for truthy values on, mutually exclusive with `colors`
 )
 
 print(table)

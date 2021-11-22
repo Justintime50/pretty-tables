@@ -1,2 +1,3 @@
 # flake8: noqa
-from pretty_tables.tables import Colors, PrettyTable
+from pretty_tables.formatting import Colors
+from pretty_tables.tables import create
