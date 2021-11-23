@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## v2.0.0 (2021-11-22)
+
+* Refactored the entire app to be more straightforward to use. Create a new table by calling `pretty_tables.create()` and pass in your arguments
+* Added missing white and black colors, changed how to invoke the colors (now `pretty_tables.Colors.blue` instead of `pretty_tables.TableColors.OKBLUE`)
+* Validate `color` parameter which was previously skipped
+* Overhauls documentation providing all customization options (closes #2)
+
 ## v1.3.0 (2021-09-10)
 
 * Re-adds the horizontal break between header and table content that was accidentally removed in `v1.2.0`

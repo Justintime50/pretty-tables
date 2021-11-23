@@ -13,15 +13,7 @@ Create pretty tables from headers and rows, perfect for console output.
 
 </div>
 
-Pretty Tables will create uniformly dispersed columns based on the input given and can be scaled to your needs in length of the table or number of columns. The input is automatically validated before returning successfully. Here is a simple sample output:
-
-```
-| ID | Name   | Occupation        | Employed |
-| -- | ------ | ----------------- | -------- |
-| 1  | Justin | Software Engineer | True     |
-| 2  | Misty  | Receptionist      | False    |
-| 3  | John   | No data           | False    |
-```
+Pretty Tables will create uniformly dispersed columns based on the input given and can be scaled to your needs in length of the table or number of columns. The input is automatically validated and allows for custom formatting making generating Pretty Tables a breeze.
 
 ## Install
 
@@ -35,13 +27,12 @@ make install
 
 ## Usage
 
-Pretty Tables is simple to use. Pass the `generate_table` function an array of headers and a 2 dimensional array of rows (each row must match the length of the headers). Pass an optional `empty_cell_placeholder` to change the default behavior or what `None` will say in the table.
+Pretty Tables is simple to use. Create a table instance by passing a list of headers and a 2 dimensional list of rows (each row must match the length of the headers). Call the `generate` function on that instance and pass an optional `empty_cell_placeholder`, `colors`, or a `truthy` index to customize your Pretty Table.
 
-Pretty Tables will automatically validate the input and convert each item to a string before returning successfully; however, you can pass Pretty Tables any data type within an array. In the following example, we are using integers, booleans, None, and strings:
+Pretty Tables will automatically validate the input and convert each item to a string before returning successfully; however, you can pass Pretty Tables any data type within the header or row lists. In the following example, we are using `integers`, `booleans`, `None`, and `strings`:
 
 ```python
-from pretty_tables import PrettyTables
-
+import pretty_tables
 
 headers = ['ID', 'Name', 'Occupation', 'Employed']
 rows = [
@@ -50,29 +41,41 @@ rows = [
     [3, 'John', None, False],
 ]
 
-table = PrettyTables.generate_table(
-    headers=headers, 
-    rows=rows, 
-    empty_cell_placeholder='No data'
+# Add optional custom colors to each column
+colors = [
+    pretty_tables.Colors.red,
+    pretty_tables.Colors.green,
+    pretty_tables.Colors.blue,
+    pretty_tables.Colors.purple,
+]
+
+# Generate the pretty table output
+table = pretty_tables.create(
+    headers=headers,
+    rows=rows,
+    empty_cell_placeholder='No data',  # Optional: override the default `None` with a custom string
+    colors=colors,  # Optional: mutually exclusive with `truthy`
+    # truthy=3,  # Optional: integer of the column you want to check for truthy values on, mutually exclusive with `colors`
 )
+
 print(table)
 ```
 
 ### Colors
 
-You can also color each column differently by using the `colors` argument and passing a list of colors from the `pretty_tables.TableColors` class that matches the length of the headers list.
+You can also color each column differently by using the `colors` argument and passing a list of colors from the `pretty_tables.Colors` class. The input list must match the length of the headers list.
 
-**Available Colors**
-
-- HEADER
-- OKBLUE
-- OKCYAN
-- OKGREEN
-- WARNING
-- FAIL
-- ENDC
-- BOLD
-- UNDERLINE
+* black
+* blue
+* cyan
+* green
+* purple
+* red
+* white
+* yellow
+* bold
+* reset (resets all text formatting)
+* underline
 
 ## Development
 
