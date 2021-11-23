@@ -27,7 +27,7 @@ make install
 
 ## Usage
 
-Pretty Tables is simple to use. Create a table instance by passing a list of headers and a 2 dimensional list of rows (each row must match the length of the headers). Call the `generate` function on that instance and pass an optional `empty_cell_placeholder`, `colors`, or a `truthy` index to customize your Pretty Table.
+Pretty Tables is simple to use. Create a table by calling `pretty_tables.create()`, pass a list of headers and a 2 dimensional list of rows (each row must match the length of the headers). Pass an optional `empty_cell_placeholder` string, `colors` list, or a `truthy` index to customize your Pretty Table.
 
 Pretty Tables will automatically validate the input and convert each item to a string before returning successfully; however, you can pass Pretty Tables any data type within the header or row lists. In the following example, we are using `integers`, `booleans`, `None`, and `strings`:
 
