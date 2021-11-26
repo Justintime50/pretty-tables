@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v2.0.1 (2021-11-25)
+
+* Adds missing `__all__` variable for imports
+
 ## v2.0.0 (2021-11-22)
 
 * Refactored the entire app to be more straightforward to use. Create a new table by calling `pretty_tables.create()` and pass in your arguments
