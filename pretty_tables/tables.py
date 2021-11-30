@@ -1,13 +1,13 @@
-from typing import List, Optional
+from typing import Any, List, Optional
 
-from pretty_tables.formatting import _format_table
+from pretty_tables.formatting import Colors, _format_table
 
 
 def create(
-    headers: List,
-    rows: List[List],
+    headers: List[Any],
+    rows: List[List[Any]],
     empty_cell_placeholder: Optional[str] = None,
-    colors: Optional[List] = None,
+    colors: Optional[List[Colors]] = None,
     truthy: Optional[int] = None,
 ) -> str:
     """Create a pretty table with headers and rows.
@@ -42,7 +42,9 @@ def create(
     return formatted_table
 
 
-def _validate_table_input(headers: List, rows: List[List], truthy: Optional[int] = None, colors: Optional[List] = None):
+def _validate_table_input(
+    headers: List[Any], rows: List[List[Any]], truthy: Optional[int] = None, colors: Optional[List] = None
+):
     """Validate table input checking that headers and rows are set and each are a
     valid list and correct length.
 

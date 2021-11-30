@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Any, List, Optional
 
 
 class Colors:
@@ -22,7 +22,7 @@ class Colors:
     underline = '\033[4m'
 
 
-def _format_table(table: List, colors: Optional[List] = None, truthy: Optional[int] = None) -> str:
+def _format_table(table: List[Any], colors: Optional[List[Colors]] = None, truthy: Optional[int] = None) -> str:
     """Take table data and format it into a pretty table.
 
     This includes adding lines for columns and uniform spacing.
@@ -53,43 +53,41 @@ def _format_table(table: List, colors: Optional[List] = None, truthy: Optional[i
                 + table_right_boder
             )
 
-        # Check for truthyness and colors
-        if colors or truthy:
-            # Check if truthy
-            if truthy:
-                # Check if the input has the correct number of colors for truthy coloring
-                valid_num_color_entries = {0, 2}
-                if colors and (len(colors) not in valid_num_color_entries):
-                    raise ValueError('When using the truthy option, you must specify two colors, or no colors')
+        # Check if truthy
+        if truthy:
+            # Check if the input has the correct number of colors for truthy coloring
+            valid_num_color_entries = {0, 2}
+            if colors and (len(colors) not in valid_num_color_entries):
+                raise ValueError('When using the truthy option, you must specify two colors, or no colors')
 
-                # Check that the truthy column exists
-                valid_truthy_values = isinstance(truthy, int) and 0 < truthy < len(line)
-                if not valid_truthy_values:
-                    raise ValueError(f'The column specified for truthy values does not exist. Column: {truthy}')
+            # Check that the truthy column exists
+            valid_truthy_values = isinstance(truthy, int) and 0 < truthy < len(line)
+            if not valid_truthy_values:
+                raise ValueError(f'The column specified for truthy values does not exist. Column: {truthy}')
 
-                # Use default truthy colors if no colors are specified.
-                truthy_color = colors[0] if colors else Colors.green
-                non_truthy_color = colors[1] if colors else Colors.red
+            # Use default truthy colors if no colors are specified.
+            truthy_color = colors[0] if colors else Colors.green
+            non_truthy_color = colors[1] if colors else Colors.red
 
-                # Generate truthy and non-truthy rows
-                complete_table.append(
-                    table_left_border
-                    + table_column_divider.join(
-                        f'{"" if line_number == 0 else truthy_color if bool(line[truthy]) else non_truthy_color}'
-                        f'{str(item):{col_widths[i]}}{Colors.reset}'
-                        for i, item in enumerate(line)
-                    )
-                    + table_right_boder
+            # Generate truthy and non-truthy rows
+            complete_table.append(
+                table_left_border
+                + table_column_divider.join(
+                    f'{"" if line_number == 0 else truthy_color if bool(line[truthy]) else non_truthy_color}'
+                    f'{str(item):{col_widths[i]}}{Colors.reset}'
+                    for i, item in enumerate(line)
                 )
-            else:
-                # Set custom colors
-                complete_table.append(
-                    table_left_border
-                    + table_column_divider.join(
-                        f'{colors[i]}{str(item):{col_widths[i]}}{Colors.reset}' for i, item in enumerate(line)
-                    )
-                    + table_right_boder
+                + table_right_boder
+            )
+        elif not truthy and colors is not None:
+            # Set custom colors
+            complete_table.append(
+                table_left_border
+                + table_column_divider.join(
+                    f'{colors[i]}{str(item):{col_widths[i]}}{Colors.reset}' for i, item in enumerate(line)
                 )
+                + table_right_boder
+            )
         else:
             # No custom variables set, generate vanilla table
             complete_table.append(
