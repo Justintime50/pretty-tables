@@ -59,8 +59,8 @@ lint:
 mypy:
 	$(VIRTUAL_BIN)/mypy $(PROJECT_NAME)/ $(TEST_DIR)/
 
-## $(TEST_DIR) - Test the project
-$(TEST_DIR):
+## test - Test the project
+test:
 	$(VIRTUAL_BIN)/pytest
 
-.PHONY: help build coverage clean black black-check format format-check install isort isort-check lint $(TEST_DIR)
+.PHONY: help build coverage clean black black-check format format-check install isort isort-check lint mypy test
