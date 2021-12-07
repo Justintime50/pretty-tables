@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v2.0.3 (2021-12-07)
+
+* Fixes the reference to `py.typed` in `setup.py` so packages can pull in the typing of this package properly
+
 ## v2.0.2 (2021-11-30)
 
 * Adds `mypy` to run type checking and publishes types with new `py.typed` file

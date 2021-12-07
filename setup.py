@@ -15,7 +15,7 @@ DEV_REQUIREMENTS = [
 
 setuptools.setup(
     name='pretty-tables',
-    version='2.0.2',
+    version='2.0.3',
     description='Create pretty tables from headers and rows, perfect for console output.',
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -23,7 +23,7 @@ setuptools.setup(
     author='Justintime50',
     license='MIT',
     packages=setuptools.find_packages(),
-    package_data={'pretty-tables': ['py.typed']},
+    package_data={'pretty_tables': ['py.typed']},
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
