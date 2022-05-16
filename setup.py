@@ -24,8 +24,17 @@ setuptools.setup(
     url='http://github.com/justintime50/pretty-tables',
     author='Justintime50',
     license='MIT',
-    packages=setuptools.find_packages(),
-    package_data={'pretty_tables': ['py.typed']},
+    packages=setuptools.find_packages(
+        exclude=[
+            'examples',
+            'test',
+        ]
+    ),
+    package_data={
+        'pretty_tables': [
+            'py.typed',
+        ]
+    },
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
