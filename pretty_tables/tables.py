@@ -1,6 +1,13 @@
-from typing import Any, List, Optional
+from typing import (
+    Any,
+    List,
+    Optional,
+)
 
-from pretty_tables.formatting import Colors, _format_table
+from pretty_tables.formatting import (
+    Colors,
+    _format_table,
+)
 
 
 def create(
