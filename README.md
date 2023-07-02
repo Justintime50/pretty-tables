@@ -22,7 +22,7 @@ Pretty Tables will create uniformly dispersed columns based on the input given a
 pip3 install pretty-tables
 
 # Install locally
-make install
+just install
 ```
 
 ## Usage
@@ -65,23 +65,23 @@ print(table)
 
 You can also color each column differently by using the `colors` argument and passing a list of colors from the `pretty_tables.Colors` class. The input list must match the length of the headers list.
 
-* black
-* blue
-* cyan
-* green
-* purple
-* red
-* white
-* yellow
-* bold
-* reset (resets all text formatting)
-* underline
+- black
+- blue
+- cyan
+- green
+- purple
+- red
+- white
+- yellow
+- bold
+- reset (resets all text formatting)
+- underline
 
 ## Development
 
 ```bash
 # Get a comprehensive list of development tools
-make help
+just --list
 ```
 
 ## Attribution
