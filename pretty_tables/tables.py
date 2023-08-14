@@ -71,8 +71,11 @@ def _validate_table_input(
     if colors:
         if not isinstance(colors, list):
             raise ValueError('Colors are set but are not a proper list.')
-        elif not truthy and len(colors) != len(headers):
-            raise IndexError('The number of colors does not match the number of columns.')
+        if truthy:
+            # Check if the input has the correct number of colors for truthy coloring
+            valid_num_color_entries = {0, 2}
+            if colors and (len(colors) not in valid_num_color_entries):
+                raise ValueError('When using the truthy option, you must specify two colors, or no colors')
 
     table_length = len(headers)
     for i, row in enumerate(rows):

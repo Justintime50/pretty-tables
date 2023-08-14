@@ -22,6 +22,28 @@ def test_create_table_with_colors(headers, rows, colors):
     # fmt: on
 
 
+def test_create_table_with_colors_partial(headers, rows, colors_partial):
+    """Tests that we can use `Colors.none` inbetween other colors as well as use the default color
+    when our colors list doesn't match the length of the data.
+    """
+    output = pretty_tables.create(
+        headers=headers,
+        rows=rows,
+        empty_cell_placeholder='No data',
+        colors=colors_partial,
+    )
+
+    # fmt: off
+    assert output == (
+        '| \x1b[94mID\x1b[0m | \x1b[0mName  \x1b[0m | \x1b[95mOccupation       \x1b[0m | \x1b[0mEmployed\x1b[0m |\n'
+        '| -- | ------ | ----------------- | -------- |\n'
+        '| \x1b[94m1 \x1b[0m | \x1b[0mJustin\x1b[0m | \x1b[95mSoftware Engineer\x1b[0m | \x1b[0mTrue    \x1b[0m |\n'
+        '| \x1b[94m2 \x1b[0m | \x1b[0mMisty \x1b[0m | \x1b[95mReceptionist     \x1b[0m | \x1b[0mFalse   \x1b[0m |\n'
+        '| \x1b[94m3 \x1b[0m | \x1b[0mJohn  \x1b[0m | \x1b[95mNo data          \x1b[0m | \x1b[0mFalse   \x1b[0m |'
+    )
+    # fmt: on
+
+
 def test_create_table_with_default_truthy(headers, rows):
     output = pretty_tables.create(
         headers=headers,
@@ -59,19 +81,6 @@ def test_create_table_with_custom_truthy_colors(headers, rows):
         '| \x1b[95m3 \x1b[0m | \x1b[95mJohn  \x1b[0m | \x1b[95mNo data          \x1b[0m | \x1b[95mFalse   \x1b[0m |'
     )
     # fmt: on
-
-
-def test_create_table_with_default_truthy_not_enough_colors(headers, rows):
-    with pytest.raises(ValueError) as exc:
-        _ = pretty_tables.create(
-            headers=headers,
-            rows=rows,
-            empty_cell_placeholder='No data',
-            colors=[pretty_tables.Colors.cyan],
-            truthy=3,
-        )
-
-    assert 'When using the truthy option, you must specify two colors, or no colors' in str(exc.value)
 
 
 def test_create_table_with_default_truthy_bad_column_index(headers, rows):

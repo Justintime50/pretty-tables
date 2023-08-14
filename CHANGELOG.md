@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v3.1.0 (2023-08-14)
+
+- Removes the validation requiring the colors array to match the length of the columns. When no color is passed for a column, the formatting will be reset to default
+- Introduces the `Colors.none` enum to be used instead of `None` on the colors array
+
 ## v3.0.0 (2023-07-01)
 
 - Drops support for Python 3.7
