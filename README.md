@@ -76,6 +76,7 @@ You can also color each column differently by using the `colors` argument and pa
 - bold
 - reset (resets all text formatting)
 - underline
+- none (acts like reset, used instead of passing `None` as a color)
 
 ## Development
 

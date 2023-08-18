@@ -24,6 +24,7 @@ class Colors:
     bold = '\033[1m'
     reset = '\033[0m'  # Resets all text formatting
     underline = '\033[4m'
+    none = '\033[0m'  # Same as `reset`
 
 
 def _format_table(table: List[Any], colors: Optional[List[Colors]] = None, truthy: Optional[int] = None) -> str:
@@ -57,13 +58,7 @@ def _format_table(table: List[Any], colors: Optional[List[Colors]] = None, truth
                 + table_right_boder
             )
 
-        # Check if truthy
         if truthy:
-            # Check if the input has the correct number of colors for truthy coloring
-            valid_num_color_entries = {0, 2}
-            if colors and (len(colors) not in valid_num_color_entries):
-                raise ValueError('When using the truthy option, you must specify two colors, or no colors')
-
             # Check that the truthy column exists
             valid_truthy_values = isinstance(truthy, int) and 0 < truthy < len(line)
             if not valid_truthy_values:
@@ -88,7 +83,8 @@ def _format_table(table: List[Any], colors: Optional[List[Colors]] = None, truth
             complete_table.append(
                 table_left_border
                 + table_column_divider.join(
-                    f'{colors[i]}{str(item):{col_widths[i]}}{Colors.reset}' for i, item in enumerate(line)
+                    f'{colors[i] if len(colors) > i else Colors.none}{str(item):{col_widths[i]}}{Colors.reset}'
+                    for i, item in enumerate(line)
                 )
                 + table_right_boder
             )

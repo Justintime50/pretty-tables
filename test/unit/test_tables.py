@@ -77,17 +77,6 @@ def test_validate_table_input_bad_colors(headers, rows):
     assert 'Colors are set but are not a proper list.' in str(error.value)
 
 
-def test_validate_table_input_colors_bad_length(headers, rows):
-    with pytest.raises(IndexError) as error:
-        _validate_table_input(
-            headers=headers,
-            rows=rows,
-            colors=[1, 2],
-        )
-
-    assert 'The number of colors does not match the number of columns.' in str(error.value)
-
-
 def test_validate_table_input_bad_row_in_rows():
     headers = ['column1']
     rows = [
@@ -114,3 +103,16 @@ def test_validate_table_input_mismatching_column_length():
         )
 
     assert 'Row 1 has 1 column(s) which does not match the table columns of 2.' in str(error.value)
+
+
+def test_validate_table_with_default_truthy_not_enough_colors(headers, rows):
+    with pytest.raises(ValueError) as exc:
+        _ = pretty_tables.create(
+            headers=headers,
+            rows=rows,
+            empty_cell_placeholder='No data',
+            colors=[pretty_tables.Colors.cyan],
+            truthy=3,
+        )
+
+    assert 'When using the truthy option, you must specify two colors, or no colors' in str(exc.value)

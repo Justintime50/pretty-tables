@@ -7,7 +7,7 @@ with open('README.md', 'r') as fh:
 DEV_REQUIREMENTS = [
     'bandit == 1.7.*',
     'black == 23.*',
-    'build == 0.7.*',
+    'build == 0.10.*',
     'flake8 == 6.*',
     'isort == 5.*',
     'mypy == 1.3.*',
@@ -18,7 +18,7 @@ DEV_REQUIREMENTS = [
 
 setuptools.setup(
     name='pretty-tables',
-    version='3.0.0',
+    version='3.1.0',
     description='Create pretty tables from headers and rows, perfect for console output.',
     long_description=long_description,
     long_description_content_type="text/markdown",
