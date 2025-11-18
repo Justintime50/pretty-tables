@@ -7,7 +7,7 @@ def test_create_table_with_colors(headers, rows, colors):
     output = pretty_tables.create(
         headers=headers,
         rows=rows,
-        empty_cell_placeholder='No data',
+        empty_cell_placeholder="No data",
         colors=colors,
     )
 
@@ -29,7 +29,7 @@ def test_create_table_with_colors_partial(headers, rows, colors_partial):
     output = pretty_tables.create(
         headers=headers,
         rows=rows,
-        empty_cell_placeholder='No data',
+        empty_cell_placeholder="No data",
         colors=colors_partial,
     )
 
@@ -48,7 +48,7 @@ def test_create_table_with_default_truthy(headers, rows):
     output = pretty_tables.create(
         headers=headers,
         rows=rows,
-        empty_cell_placeholder='No data',
+        empty_cell_placeholder="No data",
         truthy=3,
     )
 
@@ -67,7 +67,7 @@ def test_create_table_with_custom_truthy_colors(headers, rows):
     output = pretty_tables.create(
         headers=headers,
         rows=rows,
-        empty_cell_placeholder='No data',
+        empty_cell_placeholder="No data",
         colors=[pretty_tables.Colors.cyan, pretty_tables.Colors.purple],
         truthy=3,
     )
@@ -88,11 +88,11 @@ def test_create_table_with_default_truthy_bad_column_index(headers, rows):
         _ = pretty_tables.create(
             headers=headers,
             rows=rows,
-            empty_cell_placeholder='No data',
-            truthy='bad',
+            empty_cell_placeholder="No data",
+            truthy="bad",
         )
 
-    assert 'The column specified for truthy values does not exist. Column: bad' in str(exc.value)
+    assert "The column specified for truthy values does not exist. Column: bad" in str(exc.value)
 
 
 def test_create_table_with_default_truthy_out_of_range_column(headers, rows):
@@ -100,8 +100,8 @@ def test_create_table_with_default_truthy_out_of_range_column(headers, rows):
         _ = pretty_tables.create(
             headers=headers,
             rows=rows,
-            empty_cell_placeholder='No data',
+            empty_cell_placeholder="No data",
             truthy=5,
         )
 
-    assert 'The column specified for truthy values does not exist. Column: 5' in str(exc.value)
+    assert "The column specified for truthy values does not exist. Column: 5" in str(exc.value)

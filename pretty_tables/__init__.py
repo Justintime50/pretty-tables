@@ -3,6 +3,6 @@ from pretty_tables.tables import create
 
 
 __all__ = [
-    'Colors',
-    'create',
+    "Colors",
+    "create",
 ]

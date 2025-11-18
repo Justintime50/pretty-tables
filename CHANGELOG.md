@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v4.0.0 (2025-11-18)
+
+- Drops support for Python 3.8 and 3.9
+- Bumps dependencies
+
 ## v3.1.0 (2023-08-14)
 
 - Removes the validation requiring the colors array to match the length of the columns. When no color is passed for a column, the formatting will be reset to default

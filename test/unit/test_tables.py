@@ -8,7 +8,7 @@ def test_create_table(headers, rows):
     output = pretty_tables.create(
         headers=headers,
         rows=rows,
-        empty_cell_placeholder='No data',
+        empty_cell_placeholder="No data",
     )
 
     # fmt: off
@@ -30,18 +30,18 @@ def test_validate_table_input_no_headers(rows):
             rows=rows,
         )
 
-    assert 'Headers are either not set or are not a proper list.' in str(error.value)
+    assert "Headers are either not set or are not a proper list." in str(error.value)
 
 
 def test_validate_table_input_bad_headers(rows):
-    headers = '123'
+    headers = "123"
     with pytest.raises(ValueError) as error:
         _validate_table_input(
             headers=headers,
             rows=rows,
         )
 
-    assert 'Headers are either not set or are not a proper list.' in str(error.value)
+    assert "Headers are either not set or are not a proper list." in str(error.value)
 
 
 def test_validate_table_input_no_rows(headers):
@@ -52,18 +52,18 @@ def test_validate_table_input_no_rows(headers):
             rows=rows,
         )
 
-    assert 'Rows are either not set or are not a proper list.' in str(error.value)
+    assert "Rows are either not set or are not a proper list." in str(error.value)
 
 
 def test_validate_table_input_bad_rows(headers):
-    rows = '123'
+    rows = "123"
     with pytest.raises(ValueError) as error:
         _validate_table_input(
             headers=headers,
             rows=rows,
         )
 
-    assert 'Rows are either not set or are not a proper list.' in str(error.value)
+    assert "Rows are either not set or are not a proper list." in str(error.value)
 
 
 def test_validate_table_input_bad_colors(headers, rows):
@@ -71,16 +71,16 @@ def test_validate_table_input_bad_colors(headers, rows):
         _validate_table_input(
             headers=headers,
             rows=rows,
-            colors='asdf',
+            colors="asdf",
         )
 
-    assert 'Colors are set but are not a proper list.' in str(error.value)
+    assert "Colors are set but are not a proper list." in str(error.value)
 
 
 def test_validate_table_input_bad_row_in_rows():
-    headers = ['column1']
+    headers = ["column1"]
     rows = [
-        '123',
+        "123",
     ]
     with pytest.raises(IndexError) as error:
         _validate_table_input(
@@ -88,13 +88,13 @@ def test_validate_table_input_bad_row_in_rows():
             rows=rows,
         )
 
-    assert 'Row 1 is not a proper list.' in str(error.value)
+    assert "Row 1 is not a proper list." in str(error.value)
 
 
 def test_validate_table_input_mismatching_column_length():
-    headers = ['column1', 'column2']
+    headers = ["column1", "column2"]
     rows = [
-        ['123'],
+        ["123"],
     ]
     with pytest.raises(IndexError) as error:
         _validate_table_input(
@@ -102,7 +102,7 @@ def test_validate_table_input_mismatching_column_length():
             rows=rows,
         )
 
-    assert 'Row 1 has 1 column(s) which does not match the table columns of 2.' in str(error.value)
+    assert "Row 1 has 1 column(s) which does not match the table columns of 2." in str(error.value)
 
 
 def test_validate_table_with_default_truthy_not_enough_colors(headers, rows):
@@ -110,9 +110,9 @@ def test_validate_table_with_default_truthy_not_enough_colors(headers, rows):
         _ = pretty_tables.create(
             headers=headers,
             rows=rows,
-            empty_cell_placeholder='No data',
+            empty_cell_placeholder="No data",
             colors=[pretty_tables.Colors.cyan],
             truthy=3,
         )
 
-    assert 'When using the truthy option, you must specify two colors, or no colors' in str(exc.value)
+    assert "When using the truthy option, you must specify two colors, or no colors" in str(exc.value)

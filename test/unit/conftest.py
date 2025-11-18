@@ -6,19 +6,19 @@ import pretty_tables
 @pytest.fixture()
 def headers():
     return [
-        'ID',
-        'Name',
-        'Occupation',
-        'Employed',
+        "ID",
+        "Name",
+        "Occupation",
+        "Employed",
     ]
 
 
 @pytest.fixture()
 def rows():
     return [
-        [1, 'Justin', 'Software Engineer', True],
-        [2, 'Misty', 'Receptionist', False],
-        [3, 'John', None, False],
+        [1, "Justin", "Software Engineer", True],
+        [2, "Misty", "Receptionist", False],
+        [3, "John", None, False],
     ]
 
 

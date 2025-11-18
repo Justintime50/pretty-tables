@@ -61,28 +61,28 @@ def _validate_table_input(
         - colors: A list of Colors for each column.
     """
     if not headers or not isinstance(headers, list):
-        raise ValueError('Headers are either not set or are not a proper list.')
+        raise ValueError("Headers are either not set or are not a proper list.")
     elif not rows or not isinstance(rows, list):
-        raise ValueError('Rows are either not set or are not a proper list.')
+        raise ValueError("Rows are either not set or are not a proper list.")
     else:
         # Headers and rows setup correctly, do nothing
         pass
 
     if colors:
         if not isinstance(colors, list):
-            raise ValueError('Colors are set but are not a proper list.')
+            raise ValueError("Colors are set but are not a proper list.")
         if truthy:
             # Check if the input has the correct number of colors for truthy coloring
             valid_num_color_entries = {0, 2}
             if colors and (len(colors) not in valid_num_color_entries):
-                raise ValueError('When using the truthy option, you must specify two colors, or no colors')
+                raise ValueError("When using the truthy option, you must specify two colors, or no colors")
 
     table_length = len(headers)
     for i, row in enumerate(rows):
         if not isinstance(row, list):
-            raise IndexError(f'Row {i + 1} is not a proper list.')
+            raise IndexError(f"Row {i + 1} is not a proper list.")
         row_length = len(row)
         if row_length != table_length:
             raise IndexError(
-                f'Row {i + 1} has {row_length} column(s) which does not match the table columns of {table_length}.'
+                f"Row {i + 1} has {row_length} column(s) which does not match the table columns of {table_length}."
             )
