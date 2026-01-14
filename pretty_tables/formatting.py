@@ -72,7 +72,7 @@ def _format_table(table: List[Any], colors: Optional[List[Colors]] = None, truth
             complete_table.append(
                 table_left_border
                 + table_column_divider.join(
-                    f'{"" if line_number == 0 else truthy_color if bool(line[truthy]) else non_truthy_color}'
+                    f"{'' if line_number == 0 else truthy_color if bool(line[truthy]) else non_truthy_color}"
                     f"{str(item):{col_widths[i]}}{Colors.reset}"
                     for i, item in enumerate(line)
                 )
