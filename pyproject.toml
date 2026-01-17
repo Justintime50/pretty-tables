@@ -32,5 +32,8 @@ pretty_tables = ["py.typed"]
 [tool.ruff]
 line-length = 120
 
+[tool.ruff.lint]
+extend-select = ["I", "E501"]
+
 [tool.mypy]
 disable_error_code = "import-untyped"
